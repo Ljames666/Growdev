@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Keania+One&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Geostar&family=Keania+One&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap");
+
+:root {
+  font-size: 13px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+}
+header {
+  font-family: "geostar";
+  font-size: 20px;
+  margin-top: 130px;
+  word-spacing: 10px;
+  letter-spacing: 2px;
+}
+
+h2 {
+  margin-top: 10px;
+  text-align: right;
+  font-size: 19px;
+  font-style: italic;
+  margin-right: 80px;
+}
+
+span {
+  color: rgb(69, 219, 10);
+  font-weight: normal;
+}
+
+p {
+  margin-top: 50px;
+  font-size: 2rem;
+}
+
+img {
+  width: 35px;
+}
+
+#menuLateral {
+  height: 100%;
+  width: 20%;
+  background-image: url(../Jamerson_Atividade1_HTML-CSS/Imagens/c59ad2bd4ad2fbacd04017debc679ddb.gif);
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
+
+#minhaFoto {
+  height: 170px;
+  width: 170px;
+  margin-top: 130px;
+  border-radius: 50%;
+  border-style: ridge;
+  border-width: 10px;
+  border-color: rgb(52, 163, 8);
+}
+
+#menu {
+  margin-top: 30px;
+  font-size: 22px;
+  line-height: 40px;
+  text-shadow: 0.2px 0.2px ghostwhite;
+}
+
+#menu > ul > li > a {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-family: "geostar";
+  letter-spacing: 2px;
+  text-decoration: none;
+  color: rgb(69, 219, 10);
+}
+
+#conteudo {
+  color: rgb(198, 231, 184);
+  width: 80%;
+  height: 100%;
+  background-color: #010c04d8;
+  display: inline-table;
+  vertical-align: top;
+  margin-left: -7px;
+}
+
+#redeSociais {
+  position: absolute;
+  top: 90%;
+  right: 70px;
+}
+.social {
+  width: 50px;
+  vertical-align: sub;
+  display: table-cell;
+}
+
+#force {
+  padding-left: 40px;
+}
+
+#read {
+  margin-top: 20px;
+  margin-right: 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  text-align: justify;
+}
+#frase {
+  font-style: italic;
+}
+
+.citacao {
+  font-family: "dancing script";
+  text-align: right;
+  text-shadow: rgb(55, 139, 22) 12px;
+  margin-top: 0px;
+  color: ghostwhite;
+}
+
+#titulo {
+  font-size: 40px;
+}
+
+.info {
+  margin-top: 0px;
+  padding: 10px;
+  border-radius: 1em;
+  background-color: honeydew;
+  opacity: 50%;
+
+  background-blend-mode: luminosity;
+
+  color: #010c04d8;
+}
+
+.list {
+  margin: auto;
+  max-width: 450px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-top: 10px;
+  font-size: 20px;
+}

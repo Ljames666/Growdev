@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posicionamento 4</title>
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      body {
+        height: 100vh;
+        width: 100vh;
+        background-color: rgb(177, 177, 177);
+      }
+
+      div {
+        position: absolute;
+        height: 120px;
+        width: 120px;
+        background-color: rgb(53, 53, 53);
+      }
+
+      .seg {
+        top: 0%;
+        margin-left: 126px;
+      }
+      .terc {
+        top: 0%;
+        margin-left: 252px;
+      }
+
+      .quin {
+        bottom: 0%;
+        margin-right: 126px;
+      }
+      .quar {
+        margin-right: 252px;
+      }
+      .sex {
+        right: 0%;
+      }
+
+      .line2 {
+        margin-top: 126px;
+      }
+      .line3 {
+        margin-top: 252px;
+      }
+      .line4 {
+        right: 0%;
+        bottom: 0%;
+        margin-bottom: 126px;
+      }
+      .line5 {
+        right: 0%;
+        bottom: 0%;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <div class="seg"></div>
+    <div class="terc"></div>
+
+    <div class="line2"></div>
+    <div class="seg line2"></div>
+
+    <div class="line3"></div>
+    <div class="line3 sex"></div>
+
+    <div class="line4 sex"></div>
+    <div class="line4 quin"></div>
+
+    <div class="line5 quar"></div>
+    <div class="line5 quin"></div>
+    <div class="line5 sex"></div>
+  </body>
+</html>
