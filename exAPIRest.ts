@@ -146,5 +146,312 @@ app.get("/inverter-nomes-pessoas/", (req, res) => {
     pessoa: arrayPessoas.map((pessoa) => pessoa.nome.split("").reverse().join("")),
   });
 });
+// exercicio 11
+
+let arrPessoas: Array<PessoaC> = [];
+
+class PessoaC {
+  public id: number;
+
+  constructor(public nome: string, public idade: number, public cpf: string) {
+    this.id = id;
+    id++;
+  }
+}
+
+app.post("/adicionar-pessoa", (req, res) => {
+  let { nome, idade, cpf } = req.body;
+  let possue = false;
+
+  arrPessoas.forEach((pessoa) => {
+    if (pessoa.cpf == cpf || pessoa.id == id) possue = true;
+  });
+  if (possue) {
+    res.send({
+      mensagem: "Pessoa já cadastrada",
+    });
+  }
+
+  let newPessoa = new PessoaC(nome, parseInt(idade), cpf);
+
+  arrayPessoas.push(newPessoa);
+  res.send({
+    newPessoa,
+    arrayPessoas,
+  });
+});
+
+// // exercicio 12
+
+let alfabeto = "abcdefghijklmnopqrstuvwxyz";
+
+app.post("/adicionar-time/", (req, res) => {
+  let estado: string = req.body.estado;
+  let ano: number = req.body.ano;
+  let nome: string = req.body.nome;
+
+  if (!nome && !ano && !estado) {
+    res.status(406).send({
+      mensagem: "Informe um nome, ano e estado",
+    });
+  } else {
+    let alfaArray = Array.from(alfabeto);
+    let arrayName = Array.from(nome);
+    let plusAno = Array.from(ano.toString())
+      .map(Number)
+      .reduce((x, y) => x + y);
+    let index = 0;
+    for (const item of arrayName) {
+      let indexArray = alfaArray.findIndex((letra) => letra == item);
+      let modificador = 0;
+      while (indexArray + plusAno - modificador >= 26) {
+        modificador += 26;
+      }
+      let novoIndex = indexArray + plusAno - modificador;
+      arrayName[index] = alfaArray[novoIndex];
+      index++;
+    }
+    let nomeInvertido = arrayName.join("").toUpperCase();
+
+    res.status(200).send({
+      mensagem: "ok",
+      resposta: nomeInvertido,
+      dados: {
+        nome,
+        estado,
+        ano,
+        somaDoAno: plusAno,
+      },
+    });
+  }
+});
+
+// exercicio 13
+let boxValores: number[] = [];
+app.post("/adicionar-valores-calculo", (req, res) => {
+  let valor: number = JSON.parse(req.body.valor);
+  let valorString: string[] = Array.from(valor.toString()); // ["2", "0", "5"]
+  for (const numero of valorString) {
+    if (numero == "2" || numero == "4") {
+      return res.status(200).send({
+        mensagem: "numero possui 2 ou 4 e não foi inserido.",
+        boxValores: boxValores,
+        dados: {
+          valorInformado: valor,
+        },
+      });
+    }
+  }
+  boxValores.push(valor);
+  let soma: number = boxValores.reduce((x, y) => x + y);
+
+  let somaEmArray: number[] = [];
+  for (let x = soma; x > 0; x--) {
+    if (x == 0) {
+      console.log(`soma é ${x}`);
+      break;
+    }
+    somaEmArray.unshift(x);
+  }
+
+  let impares: number[] = [];
+  for (let x = 0; x <= somaEmArray.length; x++) {
+    if (x % 2) {
+      impares.push(x);
+    }
+  }
+  let quantImpares: number = impares.length;
+
+  let pares: number[] = [];
+  for (let x = 1; x <= somaEmArray.length; x++) {
+    if (x % 2 == 0) {
+      pares.push(x);
+    }
+  }
+  let quantPares: number = pares.length;
+
+  res.status(201).send({
+    mensagem: "ok",
+    boxValores: boxValores,
+    dados: {
+      valorInformado: valor,
+      somaValor: soma,
+      somaEmArray: somaEmArray,
+      quantidaDePares: quantPares,
+      listaDePares: pares,
+      quantidaDeImpares: quantImpares,
+      listaDeImpares: impares,
+    },
+  });
+});
+
+// exercicio 14
+// let data: Date = new Date();
+// let dataFormatada: string = `${data.getDate()}/${data.getMonth()}/${data.getFullYear()}`;
+
+interface Ientrada {
+  usuarioId: string;
+  milhas: number | string;
+  data: string;
+}
+
+let boxClientes: Ientrada[] = [];
+
+app.post("/cadastrar-milhas", (req, res) => {
+  let usuarioId: string = req.body.usuarioId;
+  let milhas = req.body.milhas;
+  let data = req.body.data as string;
+
+  let testeGeral = (usuarioId: string, milhas: any, data: string) => {
+    // checa usuario presente
+    if (!usuarioId) {
+      return res.status(406).send({
+        mensagem: "Insira um usuarioId",
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+          boxClientes,
+        },
+      });
+    } // checa milhas presente
+    else if (!milhas) {
+      return res.status(406).send({
+        mensagem: "Insira um milhas",
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+          boxClientes,
+        },
+      });
+    } // checa milhas é um numero
+    else if (isNaN(milhas)) {
+      return res.status(418).send({
+        mensagem: "milha is not a number",
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+          boxClientes,
+        },
+      });
+    } // checa data presente
+    else if (!data) {
+      return res.status(406).send({
+        mensagem: "Insira um data",
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+          boxClientes,
+        },
+      });
+    } // checa formato data
+    else if (Array.from(data)[2] != "/" || Array.from(data)[5] != "/" || data.length < 10) {
+      // .match(/\S+/\S+/\S/) ?
+      return res.status(406).send({
+        mensagem: "Insira a data no formato correto",
+        formatoCorreto: "dia/mes/anoCompletos",
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+          boxClientes,
+        },
+      });
+    }
+  };
+  let informaResgate = () => {
+    for (const cliente of boxClientes) {
+      if (cliente.usuarioId == usuarioId) {
+        if (Number(cliente.milhas) % 120000 == 0 && Number(cliente.milhas) !== 0) {
+          return `Você pode resgatar milhas`;
+        }
+      }
+    }
+  };
+  let condiciona = () => {
+    if (Number(data.slice(6, 10)) !== 2020) {
+      return 0;
+    } else {
+      return Number(milhas);
+    }
+  };
+
+  testeGeral(usuarioId, milhas, data);
+
+  for (const cliente of boxClientes) {
+    if (cliente.usuarioId == usuarioId) {
+      cliente.milhas = (Number(condiciona()) + Number(cliente.milhas)).toString();
+      return res.status(200).send({
+        mensagem: `adicionado ${condiciona()} milhas ao cliente Id ${
+          cliente.usuarioId
+        }. Total de milhas: ${cliente.milhas}`,
+        dados: {
+          usuarioId,
+          milhas,
+          data,
+        },
+        extras: {
+          boxClientes,
+        },
+        resgate: informaResgate(),
+      });
+    }
+  }
+
+  boxClientes.push({
+    usuarioId: usuarioId,
+    milhas: String(condiciona()),
+    data: data,
+  });
+
+  res.status(201).send({
+    mensagem: `Sucesso, novo usuário Id ${usuarioId} criado. Você possui ${milhas} milhas.`,
+    dados: {
+      usuarioId,
+      milhas,
+      data,
+    },
+    extras: {
+      boxClientes,
+    },
+  });
+});
+// exercicio 15
+app.post("/cadastrar-tentativas", (req, res) => {
+  let { nTentativas, nAcertos } = req.body;
+  let apro = (nAcertos / nTentativas) * 100;
+  if (apro < 40) {
+    return res.send({
+      apro,
+      mensagem: "Você precisa melhorar",
+    });
+  } else if (apro >= 40 && apro < 60) {
+    return res.send({
+      apro,
+      mensagem: "Muito bom,mas ainda pode ser melhor",
+    });
+  } else if (apro >= 60 && apro < 90) {
+    return res.send({
+      apro,
+      mensagem: "Parabéns, seu aproveitamento é acima da média",
+    });
+  } else if (apro >= 90 && apro < 100) {
+    return res.send({
+      apro,
+      mensagem: "Parabéns, você está entre os melhores",
+    });
+  } else if (apro == 100) {
+    return res.send({
+      apro,
+      mensagem: "Parabéns,você é o MELHOR",
+    });
+  } else {
+    return res.status(404).send({ mensagem: "Erro nos dados informados" });
+  }
+});
 
 app.listen(3333, () => console.log("Iniciando o servidor..."));
+
