@@ -151,35 +151,26 @@ app.get("/inverter-nomes-pessoas/", (req, res) => {
 let arrPessoas: Array<PessoaC> = [];
 
 class PessoaC {
-  public id: number;
-
-  constructor(public nome: string, public idade: number, public cpf: string) {
-    this.id = id;
-    id++;
-  }
+  constructor(public id: number, public nome: string, public idade: number, public cpf: number) {}
 }
-
+let index: number = 0;
 app.post("/adicionar-pessoa", (req, res) => {
   let { nome, idade, cpf } = req.body;
-  let possue = false;
 
-  arrPessoas.forEach((pessoa) => {
-    if (pessoa.cpf == cpf || pessoa.id == id) possue = true;
-  });
-  if (possue) {
-    res.send({
-      mensagem: "Pessoa já cadastrada",
-    });
+  let arrayPerson = arrPessoas.findIndex((item) => item.id == index || item.cpf == cpf);
+
+  if (arrayPerson >= 0) {
+    return res.status(600).send({ send: "pessoa já cadrastada" });
   }
-
-  let newPessoa = new PessoaC(nome, parseInt(idade), cpf);
-
-  arrayPessoas.push(newPessoa);
+  let newPessoa = new PessoaC(index, nome, parseInt(idade), cpf);
+  index++;
+  arrPessoas.push(newPessoa);
   res.send({
     newPessoa,
-    arrayPessoas,
+    arrPessoas,
   });
 });
+
 
 // // exercicio 12
 
